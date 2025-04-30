@@ -6,14 +6,20 @@ using namespace std;
 
 struct Patient {
     string patient_name;
-    long long patient_id; // Allows long IDs
+    long long patient_id;
     int patient_age;
     string diagnosis;
     int priority;
 };
 
-void addPatient(Patient patient[], int& count, int max_num_of_patients);
+struct Node {
+    Patient data;
+    Node* next;
 
-void displayPatients(const Patient patient[], int count);
+    Node(Patient p) {
+        data = p;
+        next = nullptr;
+    }
+};
 
-#endif 
+#endif

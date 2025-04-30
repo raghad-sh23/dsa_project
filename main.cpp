@@ -48,7 +48,7 @@ int main() {
                 TreatmentRecord undone = undoStack.pop();
                 if (!undone.patientName.empty()) {
                     cout << "Undone treatment for: " << undone.patientName
-                         << " - " << undone.treatmentDetails << endl;
+                        << " - " << undone.treatmentDetails << endl;
                 }
                 break;
             }
@@ -56,7 +56,7 @@ int main() {
                 TreatmentRecord topRecord = undoStack.peek();
                 if (!topRecord.patientName.empty()) {
                     cout << "Last treatment: " << topRecord.patientName
-                         << " - " << topRecord.treatmentDetails << endl;
+                        << " - " << topRecord.treatmentDetails << endl;
                 }
                 break;
             }

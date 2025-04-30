@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build hospital_app",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "-std=c++17",
+          "hospital_app.cpp",
+          "patient_array.cpp",
+          "patient_linkedList.cpp",
+          "stack.cpp",
+          "queue.cpp",
+          "priorityqueue.cpp",
+          "-o",
+          "hospital_app"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"]
+      }
+    ]
+  }
+  

@@ -3,27 +3,7 @@
 using namespace std;
 
 
-Node::Node(Patient p) {
-    data = p;
-    next = nullptr;
-}
-
-void insertPatient(Node*& head) {
-    Patient p;
-
-    cout << "Enter Patient ID: ";
-    cin >> p.patient_id;
-
-    cout << "Enter Age: ";
-    cin >> p.patient_age;
-
-    cin.ignore();
-    cout << "Enter Name: ";
-    getline(cin, p.patient_name);
-
-    cout << "Enter Diagnosis: ";
-    getline(cin, p.diagnosis);
-
+void insertPatient(Node*& head, const Patient& p) {
     Node* newNode = new Node(p);
 
     if (head == nullptr) {
@@ -34,7 +14,10 @@ void insertPatient(Node*& head) {
             temp = temp->next;
         temp->next = newNode;
     }
+
+    cout << "Critical patient added to the list.\n";
 }
+
 
 void displayPatients(Node* head) {
     Node* current = head;

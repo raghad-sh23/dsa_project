@@ -22,4 +22,12 @@ struct Node {
     }
 };
 
+// Array-based patient system
+void addPatient(Patient patient[], int& count, int max_num_of_patients);
+void displayPatients(const Patient patient[], int count);
+
+// Linked list-based for critical patients
+void insertPatient(Node*& head, const Patient& p);
+void displayPatients(Node* head);
+
 #endif

@@ -55,3 +55,4 @@ void PriorityQueue::display() {
         cout << i + 1 << ". " << queue[i].patient_name << " (" << queue[i].diagnosis << ", Priority " << queue[i].priority << ")\n";
     }
 }
+

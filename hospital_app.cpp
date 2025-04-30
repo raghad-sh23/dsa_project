@@ -39,7 +39,7 @@ int main() {
 
     Node* head = nullptr;  // Linked list for critical patients
 
-
+    PriorityQueue erQueue;  // For managing critical patients using priority
 
     Stack undoStack;
 
@@ -51,7 +51,9 @@ int main() {
         cout << "3. Add Treatment Record\n";
         cout << "4. Undo Last Treatment\n";
         cout << "5. View Last Treatment\n";
-        cout << "6. Exit\n";
+        cout << "6. Add Critical Patient to Priority Queue\n";
+        cout << "7. Serve Critical Patient from Priority Queue\n";
+        cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore();
@@ -115,7 +117,25 @@ int main() {
                 break;
             }
 
-            case 6:
+            case 6: {
+                Patient p = inputPatient();  // reuse your input function
+                erQueue.insert(p);
+                cout << "Patient added to priority queue.\n";
+                break;
+            }
+            
+            case 7: {
+                if (erQueue.isEmpty()) {
+                    cout << "No patients in the priority queue.\n";
+                } else {
+                    Patient served = erQueue.removeHighestPriority();
+                    cout << "Serving critical patient: " << served.patient_name
+                         << " - " << served.diagnosis << " (Priority " << served.priority << ")\n";
+                }
+                break;
+            }
+            
+            case 8:
                 cout << "Exiting the system. Goodbye!\n";
                 break;
 
@@ -123,7 +143,7 @@ int main() {
                 cout << "Invalid choice. Please try again.\n";
         }
 
-    } while (choice != 6);
+    } while (choice != 8);
 
     return 0;
 }

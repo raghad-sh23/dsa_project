@@ -3,6 +3,8 @@
 #include "stack.h"
 #include "priorityqueue.h"
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
 // Linked list functions
@@ -54,10 +56,11 @@ int main() {
         cout << "3. Display All Patients\n";
         cout << "4. Admit Emergency Patient (Priority Queue)\n";
         cout << "5. Serve Emergency Patient\n";
-        cout << "6. Add Treatment Record\n";
-        cout << "7. Undo Last Treatment\n";
-        cout << "8. View Last Treatment\n";
-        cout << "9. Exit\n";
+        cout << "6. Display Emergency Room Patients\n";
+        cout << "7. Add Treatment Record\n";
+        cout << "8. Undo Last Treatment\n";
+        cout << "9. View Last Treatment\n";
+        cout << "0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore();
@@ -108,6 +111,33 @@ int main() {
             }
 
             case 6: {
+                cout << "\n--- Emergency Room Patients by Priority ---\n";
+            
+                PriorityQueue tempQueue = erQueue;
+            
+                vector<Patient> priorityList[3]; // 0: priority 1, 1: priority 2, 2: priority 3
+            
+                while (!tempQueue.isEmpty()) {
+                    Patient p = tempQueue.removeHighestPriority();
+                    if (p.priority >= 1 && p.priority <= 3)
+                        priorityList[p.priority - 1].push_back(p);
+                }
+            
+                string labels[3] = {"HIGH (1)", "MEDIUM (2)", "LOW (3)"};
+            
+                for (int i = 0; i < 3; ++i) {
+                    cout << "\n[ " << labels[i] << " Priority ]\n";
+                    for (const auto& p : priorityList[i]) {
+                        cout << "Name: " << p.patient_name
+                             << ", ID: " << p.patient_id
+                             << ", Diagnosis: " << p.diagnosis << endl;
+                    }
+                }
+            
+                break;
+            }            
+
+            case 7: {
                 TreatmentRecord newRecord;
                 cout << "Enter patient name for treatment: ";
                 getline(cin, newRecord.patientName);
@@ -118,7 +148,7 @@ int main() {
                 break;
             }
 
-            case 7: {
+            case 8: {
                 TreatmentRecord undone = undoStack.pop();
                 if (!undone.patientName.empty()) {
                     cout << "Undone treatment for: " << undone.patientName
@@ -127,7 +157,7 @@ int main() {
                 break;
             }
 
-            case 8: {
+            case 9: {
                 TreatmentRecord topRecord = undoStack.peek();
                 if (!topRecord.patientName.empty()) {
                     cout << "Last treatment: " << topRecord.patientName
@@ -136,7 +166,7 @@ int main() {
                 break;
             }
 
-            case 9:
+            case 0:
                 cout << "Exiting the system. Goodbye!\n";
                 break;
 
@@ -144,7 +174,7 @@ int main() {
                 cout << "Invalid choice. Please try again.\n";
         }
 
-    } while (choice != 9);
+    } while (choice != 0);
 
     return 0;
 }

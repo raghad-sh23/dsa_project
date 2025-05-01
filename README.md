@@ -1,7 +1,7 @@
 # dsa_project
 # Hospital Patient Record Management System
 
-## 📌 Project Overview
+##  Project Overview
 
 This C++ application simulates a hospital management system that supports patient registration, emergency handling, treatment tracking, and undo functionality. It demonstrates the use of multiple data structures:
 - Arrays for patients with appointments
@@ -11,18 +11,18 @@ This C++ application simulates a hospital management system that supports patien
 
 ---
 
-## 💡 Features
+##  Features
 
-- ✅ Register patients with appointments (stored in array)
-- 🚶 Register walk-in patients without appointments (stored in linked list)
-- 📋 View all patients by category
-- 🚨 Admit and serve emergency patients using a priority queue
-- 🔍 Display emergency patients grouped by priority level
-- 🩺 Add treatment records and undo them via stack operations
+-  Register patients with appointments (stored in array)
+-  Register walk-in patients without appointments (stored in linked list)
+-  View all patients by category
+-  Admit and serve emergency patients using a priority queue
+-  Display emergency patients grouped by priority level
+-  Add treatment records and undo them via stack operations
 
 ---
 
-## 📁 File Breakdown
+##  File Breakdown
 
 | File Name                | Purpose                                                           |
 |-------------------------|-------------------------------------------------------------------|
@@ -36,7 +36,7 @@ This C++ application simulates a hospital management system that supports patien
 
 ---
 
-## 🧠 Data Structures Used
+##  Data Structures Used
 
 - **Array**: Fixed-size storage for patients with appointments
 - **Linked List**: Flexible storage for walk-in patients without appointments
@@ -44,7 +44,7 @@ This C++ application simulates a hospital management system that supports patien
 - **Stack**: Records treatments and allows undo functionality
 
 ---
-## ⚙️ How to Compile and Run
+##  How to Compile and Run
 
 Make sure you have a C++ compiler (e.g. g++) installed.
 
@@ -55,7 +55,7 @@ g++ -std=c++17 hospital_app.cpp patient_array.cpp patient_linkedList.cpp priorit
 
 ---
 
-## 🎮 Menu Options
+##  Menu Options
 
 1. Register Patient with Appointment (Array)
 2. Register Walk-In Patient (Linked List)

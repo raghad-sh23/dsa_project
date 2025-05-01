@@ -48,11 +48,11 @@ int main() {
         cout << "\n--- Hospital Patient Record System ---\n";
         cout << "1. Add New Patient\n";
         cout << "2. Display All Patients\n";
-        cout << "3. Add Treatment Record\n";
-        cout << "4. Undo Last Treatment\n";
-        cout << "5. View Last Treatment\n";
-        cout << "6. Add Critical Patient to Priority Queue\n";
-        cout << "7. Serve Critical Patient from Priority Queue\n";
+        cout << "3. Add Critical Patient to Priority Queue\n";
+        cout << "4. Serve Critical Patient from Priority Queue\n";
+        cout << "5. Add Treatment Record\n";
+        cout << "6. Undo Last Treatment\n";
+        cout << "7. View Last Treatment\n";
         cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
@@ -89,6 +89,24 @@ int main() {
                 break;
 
             case 3: {
+                Patient p = inputPatient();  
+                erQueue.insert(p);
+                cout << "Patient added to priority queue.\n";
+                break;
+            }
+
+            case 4: {
+                if (erQueue.isEmpty()) {
+                    cout << "No patients in the priority queue.\n";
+                } else {
+                    Patient served = erQueue.removeHighestPriority();
+                    cout << "Serving critical patient: " << served.patient_name
+                         << " - " << served.diagnosis << " (Priority " << served.priority << ")\n";
+                }
+                break;
+            }
+
+            case 5: {
                 TreatmentRecord newRecord;
                 cout << "Enter patient name for treatment: ";
                 getline(cin, newRecord.patientName);
@@ -99,16 +117,7 @@ int main() {
                 break;
             }
 
-            case 4: {
-                TreatmentRecord undone = undoStack.pop();
-                if (!undone.patientName.empty()) {
-                    cout << "Undone treatment for: " << undone.patientName
-                         << " - " << undone.treatmentDetails << endl;
-                }
-                break;
-            }
-
-            case 5: {
+            case 6: {
                 TreatmentRecord topRecord = undoStack.peek();
                 if (!topRecord.patientName.empty()) {
                     cout << "Last treatment: " << topRecord.patientName
@@ -117,20 +126,11 @@ int main() {
                 break;
             }
 
-            case 6: {
-                Patient p = inputPatient();  // reuse your input function
-                erQueue.insert(p);
-                cout << "Patient added to priority queue.\n";
-                break;
-            }
-            
             case 7: {
-                if (erQueue.isEmpty()) {
-                    cout << "No patients in the priority queue.\n";
-                } else {
-                    Patient served = erQueue.removeHighestPriority();
-                    cout << "Serving critical patient: " << served.patient_name
-                         << " - " << served.diagnosis << " (Priority " << served.priority << ")\n";
+                TreatmentRecord undone = undoStack.pop();
+                if (!undone.patientName.empty()) {
+                    cout << "Undone treatment for: " << undone.patientName
+                         << " - " << undone.treatmentDetails << endl;
                 }
                 break;
             }

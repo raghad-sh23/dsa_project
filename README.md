@@ -24,7 +24,7 @@ This C++ application simulates a hospital management system that supports patien
 
 ##  File Breakdown
 
-| File Name                | Purpose                                                           |
+| File Name               | Purpose                                                           |
 |-------------------------|-------------------------------------------------------------------|
 | `hospital_app.cpp`      | Main logic and user interface for the system                      |
 | `patient.h`             | Core patient structure and linked list/array function headers     |

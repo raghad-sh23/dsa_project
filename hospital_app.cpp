@@ -12,8 +12,8 @@ void displayPatients(Node* head);
 // Array functions
 void displayPatients(const Patient patient[], int count);
 
-// Input function
-Patient inputPatient() {
+// Input function (used for both general and emergency patients)
+Patient inputPatient(bool includePriority = false) {
     Patient p;
 
     cout << "ID: ";
@@ -29,84 +29,85 @@ Patient inputPatient() {
     cout << "Diagnosis: ";
     getline(cin, p.diagnosis);
 
+    if (includePriority) {
+        cout << "Priority (1 = High, 2 = Medium, 3 = Low): ";
+        cin >> p.priority;
+        cin.ignore();
+    }
+
     return p;
 }
 
 int main() {
     const int MAX = 100;
-    Patient patient[MAX];  // Array-based patient storage
+    Patient patient[MAX];
     int patientCount = 0;
 
-    Node* head = nullptr;  // Linked list for critical patients
-
-    PriorityQueue erQueue;  // For managing critical patients using priority
-
-    Stack undoStack;
-
+    Node* head = nullptr;         
+    PriorityQueue erQueue;        
+    Stack undoStack;              
     int choice;
     do {
         cout << "\n--- Hospital Patient Record System ---\n";
-        cout << "1. Add New Patient\n";
-        cout << "2. Display All Patients\n";
-        cout << "3. Add Critical Patient to Priority Queue\n";
-        cout << "4. Serve Critical Patient from Priority Queue\n";
-        cout << "5. Add Treatment Record\n";
-        cout << "6. Undo Last Treatment\n";
-        cout << "7. View Last Treatment\n";
-        cout << "8. Exit\n";
+        cout << "1. Register Patient with Appointment (Array)\n";
+        cout << "2. Register Walk-In Patient (No Appointment / Waitlist)\n";
+        cout << "3. Display All Patients\n";
+        cout << "4. Admit Emergency Patient (Priority Queue)\n";
+        cout << "5. Serve Emergency Patient\n";
+        cout << "6. Add Treatment Record\n";
+        cout << "7. Undo Last Treatment\n";
+        cout << "8. View Last Treatment\n";
+        cout << "9. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore();
 
         switch (choice) {
             case 1: {
-                char isCritical;
-                cout << "Is the patient critical? (y/n): ";
-                cin >> isCritical;
-                cin.ignore();
-
-                Patient p = inputPatient();
-
-                if (isCritical == 'y' || isCritical == 'Y') {
-                    insertPatient(head, p);
-                    cout << "Critical patient added.\n";
+                if (patientCount < MAX) {
+                    Patient p = inputPatient();
+                    patient[patientCount++] = p;
+                    cout << "General patient added.\n";
                 } else {
-                    if (patientCount < MAX) {
-                        patient[patientCount++] = p;
-                        cout << "Regular patient added.\n";
-                    } else {
-                        cout << "ERROR: Max number of patients reached.\n";
-                    }
+                    cout << "ERROR: Maximum number of patients reached.\n";
                 }
                 break;
             }
 
-            case 2:
-                cout << "\n--- Regular Patients (Array) ---\n";
-                displayPatients(patient, patientCount);
-                cout << "\n--- Critical Patients (Linked List) ---\n";
-                displayPatients(head);
-                break;
-
-            case 3: {
-                Patient p = inputPatient();  
-                erQueue.insert(p);
-                cout << "Patient added to priority queue.\n";
+            case 2: {
+                Patient p = inputPatient();
+                insertPatient(head, p);
+                cout << "Walk-in patient added to waitlist.\n";
                 break;
             }
 
+            case 3:
+                cout << "\n Patients with Appointments \n";
+                displayPatients(patient, patientCount);
+
+                cout << "\n Walk-In Patients (No Appointments) \n";
+                displayPatients(head);
+                break;
+
             case 4: {
+                Patient p = inputPatient(true);  // includes priority
+                erQueue.insert(p);
+                cout << "Emergency patient added to priority queue.\n";
+                break;
+            }
+
+            case 5: {
                 if (erQueue.isEmpty()) {
-                    cout << "No patients in the priority queue.\n";
+                    cout << "No patients in emergency queue.\n";
                 } else {
                     Patient served = erQueue.removeHighestPriority();
-                    cout << "Serving critical patient: " << served.patient_name
+                    cout << "Serving emergency patient: " << served.patient_name
                          << " - " << served.diagnosis << " (Priority " << served.priority << ")\n";
                 }
                 break;
             }
 
-            case 5: {
+            case 6: {
                 TreatmentRecord newRecord;
                 cout << "Enter patient name for treatment: ";
                 getline(cin, newRecord.patientName);
@@ -114,15 +115,6 @@ int main() {
                 getline(cin, newRecord.treatmentDetails);
                 undoStack.push(newRecord);
                 cout << "Treatment record added.\n";
-                break;
-            }
-
-            case 6: {
-                TreatmentRecord topRecord = undoStack.peek();
-                if (!topRecord.patientName.empty()) {
-                    cout << "Last treatment: " << topRecord.patientName
-                         << " - " << topRecord.treatmentDetails << endl;
-                }
                 break;
             }
 
@@ -134,8 +126,17 @@ int main() {
                 }
                 break;
             }
-            
-            case 8:
+
+            case 8: {
+                TreatmentRecord topRecord = undoStack.peek();
+                if (!topRecord.patientName.empty()) {
+                    cout << "Last treatment: " << topRecord.patientName
+                         << " - " << topRecord.treatmentDetails << endl;
+                }
+                break;
+            }
+
+            case 9:
                 cout << "Exiting the system. Goodbye!\n";
                 break;
 
@@ -143,7 +144,7 @@ int main() {
                 cout << "Invalid choice. Please try again.\n";
         }
 
-    } while (choice != 8);
+    } while (choice != 9);
 
     return 0;
 }

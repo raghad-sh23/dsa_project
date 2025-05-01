@@ -15,7 +15,7 @@ void insertPatient(Node*& head, const Patient& p) {
         temp->next = newNode;
     }
 
-    cout << "Critical patient added to the list.\n";
+    cout << "Walk-in patient added to waitlist.\n";
 }
 
 

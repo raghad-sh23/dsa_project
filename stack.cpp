@@ -1,8 +1,9 @@
-#include "stack.h"
+//dana part
+#include "stack.h"  
 #include <iostream>
 using namespace std;
 
-Stack::Stack() {  //Constructor
+Stack::Stack() {  // Constructor
     top = -1;
 }
 
